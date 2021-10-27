@@ -5,6 +5,7 @@ metadata:
   namespace: app-workadventure-jitsi
 data:
   DOCKER_HOST_ADDRESS: "45.151.166.29"
+  ENABLE_P2P: "false"
   JICOFO_AUTH_USER: focus
   JVB_AUTH_USER: jvb
   JVB_BREWERY_MUC: jvbbrewery
