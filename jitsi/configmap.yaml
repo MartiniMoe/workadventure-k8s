@@ -20,4 +20,3 @@ data:
   XMPP_DOMAIN: meet.jitsi
   XMPP_AUTH_DOMAIN: auth.meet.jitsi
   XMPP_INTERNAL_MUC_DOMAIN: internal-muc.meet.jitsi
-  

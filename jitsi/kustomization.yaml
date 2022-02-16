@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: app-workadventure-jitsi
 resources:
 - namespace.yaml
+- configmap.yaml
 - secret.yaml
 - deployment.yaml
 - jvb-service.yaml
