@@ -11,8 +11,8 @@ spec:
   selector:
     app.kubernetes.io/name: jitsi
   type: LoadBalancer
-  loadBalancerIP: 45.151.166.29
+  loadBalancerIP: $(PUBLIC_ADDRESS)
   ports:
   - protocol: UDP
-    port: 10000
-    targetPort: 10000
+    port: $(JVB_PORT)
+    targetPort: $(JVB_PORT)

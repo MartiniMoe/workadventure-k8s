@@ -9,6 +9,20 @@ resources:
 - jvb-service.yaml
 - web-service.yaml
 vars:
+- name: JVB_PORT
+  objref:
+    kind: ConfigMap
+    name: jitsi
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.JVB_PORT
+- name: PUBLIC_ADDRESS
+  objref:
+    kind: ConfigMap
+    name: jitsi
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.DOCKER_HOST_ADDRESS
 - name: PUBLIC_HOST
   objref:
     kind: ConfigMap
