@@ -7,3 +7,11 @@ resources:
 - deployment.yaml
 - jvb-service.yaml
 - web-service.yaml
+vars:
+- name: PUBLIC_HOST
+  objref:
+    kind: ConfigMap
+    name: jitsi
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.PUBLIC_HOST

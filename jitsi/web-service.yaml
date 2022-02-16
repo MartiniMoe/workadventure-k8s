@@ -26,7 +26,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
-  - host: jitsi.dev.dorf.world
+  - host: $(PUBLIC_HOST)
     http:
       paths:
       - path: /
@@ -39,4 +39,4 @@ spec:
   tls:
     - secretName: letsencrypt-cert
       hosts:
-      - jitsi.dev.dorf.world
+      - $(PUBLIC_HOST)
