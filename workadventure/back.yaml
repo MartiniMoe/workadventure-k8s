@@ -1,8 +1,8 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: back
-  namespace: dorfadventure
   labels:
     app: back
 spec:
@@ -12,8 +12,6 @@ spec:
       app: back
   template:
     metadata:
-      namespace: dorfadventure
-
       labels:
         app: back
     spec:
@@ -22,29 +20,21 @@ spec:
           image: "quay.io/ffddorf/workadventure-back:dev"
           imagePullPolicy: Always
           env:
-            - name: DEBUG
-              value: "*"
             - name: JITSI_URL
               value: jitsi.dev.dorf.world
           ports:
             - name: web
               containerPort: 80
               protocol: TCP
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: back
-  namespace: dorfadventure
-
 spec:
   selector:
     app: back
   type: ClusterIP
   ports:
-      # By default and for convenience, the `targetPort` is set to the same value as the `port` field.
     - port: 50051
       targetPort: 50051
-      # Optional field
-      # By default and for convenience, the Kubernetes control plane will allocate a port from a range (default: 30000-32767)

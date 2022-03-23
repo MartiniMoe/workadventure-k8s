@@ -1,9 +1,8 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pusher
-  namespace: dorfadventure
-
   labels:
     app: pusher
 spec:
@@ -13,8 +12,6 @@ spec:
       app: pusher
   template:
     metadata:
-      namespace: dorfadventure
-
       labels:
         app: pusher
     spec:
@@ -25,22 +22,17 @@ spec:
           env:
             - name: API_URL
               value: "back:50051"
-            - name: DEBUG
-              value: "*"
             - name: JITSI_URL
               value: jitsi.dev.dorf.world
           ports:
             - name: web
               containerPort: 8080
               protocol: TCP
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: pusher
-  namespace: dorfadventure
-
 spec:
   type: ClusterIP
   selector:
@@ -48,38 +40,4 @@ spec:
   ports:
     - port: 80
       targetPort: 8080
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: pusher-stripprefix
-  namespace: dorfadventure
-
-spec:
-  stripPrefix:
-    prefixes:
-      - /pusher
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: pusher
-  namespace: dorfadventure
-
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`dev.dorf.world`) && PathPrefix(`/pusher`)
-      kind: Rule
-      middlewares:
-        - name: pusher-stripprefix
-          namespace: dorfadventure
-
-      services:
-        - name: pusher
-          port: 80
-  tls:
-    secretName: all-tls
+      name: http

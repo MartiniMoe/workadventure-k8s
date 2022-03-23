@@ -1,9 +1,8 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: front
-  namespace: dorfadventure
-
   labels:
     app: front
 spec:
@@ -13,8 +12,6 @@ spec:
       app: front
   template:
     metadata:
-      namespace: dorfadventure
-
       labels:
         app: front
     spec:
@@ -30,14 +27,11 @@ spec:
             - name: web
               containerPort: 8080
               protocol: TCP
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: front
-  namespace: dorfadventure
-
 spec:
   type: ClusterIP
   selector:
@@ -45,75 +39,4 @@ spec:
   ports:
     - port: 80
       targetPort: 8080
-
----
-# Redirect to https
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: https-redirect
-  namespace: dorfadventure
-
-spec:
-  redirectScheme:
-    scheme: https
-    permanent: true
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: front-http-redir
-  namespace: dorfadventure
-
-spec:
-  entryPoints:
-    - web
-  routes:
-    - match: Host(`dev.dorf.world`)
-      kind: Rule
-      middlewares:
-        - name: https-redirect
-          namespace: dorfadventure
-
-      services:
-        - name: front
-          port: 80
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: secure-headers
-  namespace: dorfadventure
-
-spec:
-  headers:
-    stsSeconds: 31536000
-    stsPreload: true
-    browserXssFilter: true
-    customResponseHeaders:
-      Server: DorfAdventure development
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: front
-  namespace: dorfadventure
-
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`dev.dorf.world`)
-      kind: Rule
-      middlewares:
-        - name: secure-headers
-          namespace: dorfadventure
-
-      services:
-        - name: front
-          port: 80
-  tls:
-    secretName: all-tls
+      name: http
