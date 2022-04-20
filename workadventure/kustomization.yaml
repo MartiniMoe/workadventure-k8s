@@ -4,6 +4,5 @@ namespace: dorfadventure
 resources:
 - back.yaml
 - front.yaml
-- ingress.yaml
 - namespace.yaml
 - pusher.yaml
